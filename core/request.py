@@ -25,7 +25,7 @@ class FactoryClient:
 
         # Request address information
         await self.sio.emit('subscribe', {
-            'scope': scope,
+            'scope': [scope],
             'payload': payload
         }, namespace=namespace)
 
