@@ -4,11 +4,11 @@ from core.client_utils import connect_to_socket
 
 
 class FactoryClient:
-    def __init__(self, setting_path):
+    def __init__(self, setting_path='settings.yaml'):
         self.CONNECTED_TO_SOCKET = False
         self.sio = socketio.AsyncClient(logger=False, engineio_logger=False)
         self.result = None
-        self.setting_path = setting_path or 'settings.yaml'
+        self.setting_path = setting_path
 
     async def async_request(self, namespace, payload, scope):
         @self.sio.event(namespace=namespace)
