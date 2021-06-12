@@ -25,7 +25,7 @@ class FactoryClient:
 
         # Request address information
         await self.sio.emit('subscribe', {
-            'scope': ['portfolio', 'assets', 'deposits', 'loans', 'staked-assets', 'locked-assets', 'charts'],
+            'scope': scope,
             'payload': payload
         }, namespace=namespace)
 
