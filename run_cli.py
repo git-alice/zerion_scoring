@@ -11,6 +11,6 @@ if __name__ == '__main__':
             'currency': 'usd',
             'portfolio_fields': 'all'
         },
-        scope='assets'
+        scope='transactions'
     )
     print(result)
