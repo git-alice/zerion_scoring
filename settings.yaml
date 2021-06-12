@@ -1,0 +1,13 @@
+connection_settings:
+  URI: wss://api-v4.zerion.io/
+  API_TOKEN: Demo.ukEVQp6L5vfgxcz4sBke7XvS873GMYHy
+  ORIGIN: http://localhost:3000
+
+namespaces:
+  - /address
+  - /assets
+  - /block_lag
+  - /compound
+  - /dydx
+  - /gas
+  - /maker
