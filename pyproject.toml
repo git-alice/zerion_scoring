@@ -10,6 +10,10 @@ PyYAML = "^5.4.1"
 python-socketio = "4.6.1"
 aiohttp = "^3.7.4"
 asyncio = "^3.4.3"
+jupyterlab = "^3.0.16"
+pandas = "^1.2.4"
+plotly = "^4.14.3"
+tqdm = "^4.61.1"
 
 [tool.poetry.dev-dependencies]
 
