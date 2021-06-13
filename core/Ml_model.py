@@ -1,4 +1,5 @@
-from catboost import CatBoostRegressor, CatBoostClassifier, Pool
+import pandas as pd
+from catboost import CatBoostClassifier, Pool
 
 
 def set_model():
@@ -15,10 +16,10 @@ def set_model():
     return model
 
 
-def predict(test_df):
+def predict(test_df, model_path):
     test_pool = Pool(data=test_df)
     model = set_model()
-    model.load_model('model.cbm', format='cbm')
+    model.load_model(model_path, format='cbm')
     prediction = model.predict(test_pool, prediction_type='Probability')
     prediction = pd.DataFrame(prediction, index=test_df.index)
     return prediction

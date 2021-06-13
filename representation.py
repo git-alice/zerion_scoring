@@ -14,6 +14,7 @@ from dash.exceptions import PreventUpdate
 from core.preprocess import preprocess_transactions, preprocess_transaction
 from core.parsing import charts_parsing, transactions_parsing, wallet_price_by_timestamps
 from core.feature_gen import gen_features
+from core.Ml_model import predict
 
 app = dash.Dash(
     __name__,
@@ -67,6 +68,17 @@ app.layout = html.Div(
                             value='0xf58ab01519e5573000cfcb5dc2da4649a5754df5',
                             style={
                                 'width': '600px'
+                            }
+                        ),
+                        dcc.Dropdown(
+                            id="model",
+                            options=[
+                                {'label': 'Model 1', 'value': 'model_1.cbm'},
+                                {'label': 'Model 2', 'value': 'model_2.cbm'},
+                            ],
+                            value='model_2.cbm',
+                            style={
+                                'width': '300px'
                             }
                         )
                     ],
@@ -148,9 +160,10 @@ app.layout = html.Div(
 @app.callback(
     [Output("graph", "figure"),
      Output("score", "children")],
-    [Input("input", "value")],
+    [Input("input", "value"),
+     Input("model", "value")],
 )
-def update(address):
+def update(address, model):
     """
     Selected chemical dropdown values handler.
 
@@ -190,9 +203,8 @@ def update(address):
     df['address_type'] = '???'
     df = df.reset_index().set_index(['address', 'transaction'])
     features = gen_features(df)
-
-    score = 1
-    return fig, f'Score: {score}'
+    score = predict(features, f'./models/{model}').loc[address, 1]
+    return fig, f'Score: {round(score, 3)}'
 
 
 if __name__ == "__main__":
