@@ -1,4 +1,4 @@
-### Zerion address scoring + 
+# Zerion address scoring + 
 
 ##### Install
 1. Install [poetry](https://python-poetry.org/docs/)
@@ -20,4 +20,4 @@
    ```bash
    poetry run pyhton representation.py
    ```
-2. Open `localhost:9000` or <server_ip>:9000`
+2. Open `localhost:9000` or `<server_ip>:9000`
