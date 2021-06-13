@@ -9,11 +9,8 @@ from core.client_utils import connect_to_socket, async_connect_to_socket
 class FactoryClient:
     def __init__(self, setting_path='settings.yaml'):
         self.CONNECTED_TO_SOCKET = False
-        self.async_sio = socketio.AsyncClient(logger=False, engineio_logger=False, reconnection_delay=1,
-                                              reconnection_delay_max=5, randomization_factor=3, ssl_verify=False)
-        self.sync_sio = socketio.Client(logger=False, engineio_logger=False, reconnection_delay=1,
-                                        reconnection_delay_max=5, randomization_factor=3, ssl_verify=False,
-                                        request_timeout=2)
+        self.async_sio = None
+        self.sync_sio = None
         self.result = None
         self.setting_path = setting_path
 
@@ -21,6 +18,8 @@ class FactoryClient:
         print(f'\r{s} | ' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=N)), end='')
 
     async def async_request(self, namespace, payload, scope):
+        self.async_sio = socketio.AsyncClient(logger=False, engineio_logger=False, reconnection_delay=1,
+                                              reconnection_delay_max=5, randomization_factor=3, ssl_verify=False)
         @self.async_sio.event(namespace=namespace)
         async def connect():
             # print(f'Connected to {namespace} namespace!')
@@ -53,6 +52,9 @@ class FactoryClient:
         return self.result
 
     def sync_request(self, namespace, payload, scope):
+        self.sync_sio = socketio.Client(logger=False, engineio_logger=False, reconnection_delay=1,
+                                        reconnection_delay_max=5, randomization_factor=3, ssl_verify=False,
+                                        request_timeout=2)
         @self.sync_sio.event(namespace=namespace)
         def connect():
             self.update_my_super_progress_bar(s='Connect')

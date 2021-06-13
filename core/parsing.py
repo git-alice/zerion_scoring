@@ -6,12 +6,12 @@ from scipy.interpolate import interp1d
 from .request import FactoryClient
 
 
-def transactions_parsing(address):
+def transactions_parsing(address, setting_path='../settings.yaml'):
     chunks = []
     i = 0
 
     while True:
-        f = FactoryClient('../settings.yaml')
+        f = FactoryClient(setting_path=setting_path)
         data = f.sync_request(
             namespace='/address',
             payload={
@@ -33,8 +33,8 @@ def transactions_parsing(address):
     return reduce(lambda acc, arr: acc + arr, chunks, [])
 
 
-def charts_parsing(address):
-    f = FactoryClient('../settings.yaml')
+def charts_parsing(address, setting_path='../settings.yaml'):
+    f = FactoryClient(setting_path=setting_path)
     charts = f.sync_request(
         namespace='/address',
         payload={
@@ -49,8 +49,8 @@ def charts_parsing(address):
     return charts
 
 
-def wallet_price_by_timestamps(address, timestamps):
-    charts = charts_parsing(address)
+def wallet_price_by_timestamps(address, timestamps, setting_path='../settings.yaml'):
+    charts = charts_parsing(address, setting_path=setting_path)
     available_timestamps, available_wallet_prices = charts[:, 0], charts[:, 1]
     func = interp1d(available_timestamps, available_wallet_prices, bounds_error=False)
     return func(timestamps)
