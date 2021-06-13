@@ -5,7 +5,7 @@ description = ""
 authors = ["GGWP"]
 
 [tool.poetry.dependencies]
-python = "3.8"
+python = "3.8.2"
 PyYAML = "^5.4.1"
 python-socketio = "4.6.1"
 aiohttp = "^3.7.4"
@@ -17,6 +17,7 @@ tqdm = "^4.61.1"
 numpy = "^1.20.3"
 scipy = "^1.6.3"
 tables = "^3.6.1"
+dash = "^1.20.0"
 
 [tool.poetry.dev-dependencies]
 
