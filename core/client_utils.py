@@ -7,11 +7,22 @@ def load_settings(setting_path):
     return settings['connection_settings']
 
 
-async def connect_to_socket(sio, namespace, seetting_path):
+async def async_connect_to_socket(sio, namespace, seetting_path):
     settings = load_settings(seetting_path)
     await sio.connect(
         f"{settings['URI']}/?api_token={settings['API_TOKEN']}",  # Request
         headers={'Origin': settings['ORIGIN']},
         namespaces=[namespace],  # Namespaces
         transports=['websocket']
+    )
+
+
+def connect_to_socket(sio, namespace, seetting_path):
+    settings = load_settings(seetting_path)
+    sio.connect(
+        f"{settings['URI']}/?api_token={settings['API_TOKEN']}",  # Request
+        headers={'Origin': settings['ORIGIN']},
+        namespaces=[namespace],  # Namespaces
+        transports=['websocket'],
+
     )
